@@ -495,15 +495,11 @@
 <body>
     <header>
         <div class="container header-content">
-            <a href="#" class="logo">Win<span>Tools</span>Hub</a>
+            <a href="index.html" class="logo">Win<span>Tools</span>Hub</a>
             <button class="mobile-menu-btn">☰</button>
             <nav>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#tools">Tools</a></li>
-                    <li><a href="#categories">Categories</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html">Home</a></li>
                 </ul>
             </nav>
         </div>
@@ -531,9 +527,11 @@
                 </div>
                 <div class="pagination">
                     <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn">Next →</button>
+                    <a href="page2.html" class="page-btn">2</a>
+                    <a href="page3.html" class="page-btn">3</a>
+                    <a href="page4.html" class="page-btn">4</a>
+                    <a href="page5.html" class="page-btn">5</a>
+                    <a href="page2.html" class="page-btn">Next →</a>
                 </div>
             </section>
 
@@ -559,16 +557,6 @@
                 <div class="footer-column">
                     <h3>WinToolsHub</h3>
                     <p>Your one-stop destination for all Windows-related tools and utilities. Carefully curated collection for professionals and enthusiasts.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#tools">Tools</a></li>
-                        <li><a href="#categories">Categories</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Categories</h3>
@@ -624,7 +612,7 @@
     </div>
 
     <script>
-        // Sample tools data - you would replace this with your actual tools data
+        // Tools data for Page 1
         const tools = [
             {
                 id: 1,
@@ -765,7 +753,7 @@
             document.getElementById('modalToolSize').textContent = `Size: ${tool.size}`;
             document.getElementById('modalToolVersion').textContent = `Version: ${tool.version}`;
             
-            // Generate download links (in a real app, these would be your actual download URLs)
+            // Generate download links
             const downloadLinks = document.getElementById('downloadLinks');
             downloadLinks.innerHTML = `
                 <div class="download-link">
@@ -788,7 +776,6 @@
                     e.preventDefault();
                     const fileName = this.dataset.file;
                     alert(`In a real implementation, this would download: ${fileName}`);
-                    // In your actual implementation, you would initiate the file download here
                 });
             });
             
