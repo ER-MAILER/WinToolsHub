@@ -612,7 +612,7 @@
     </div>
 
     <script>
-        // Tools data for Page 1
+        // Updated tools array with individual download links
         const tools = [
             {
                 id: 1,
@@ -622,7 +622,14 @@
                 size: "2.4 MB",
                 version: "6.41",
                 downloads: 12500,
-                icon: "📥"
+                icon: "📥",
+                downloadLinks: [
+                    {
+                        type: "Main Download",
+                        url: "https://example.com/download/office-activator.exe",
+                        size: "3.1 MB"
+                    }
+                ]
             },
             {
                 id: 2,
@@ -632,7 +639,14 @@
                 size: "3.1 MB",
                 version: "2.8",
                 downloads: 18700,
-                icon: "📄"
+                icon: "📄",
+                downloadLinks: [
+                    {
+                        type: "Main Download",
+                        url: "https://example.com/download/office-activator.exe",
+                        size: "3.1 MB"
+                    }
+                ]
             },
             {
                 id: 3,
@@ -642,7 +656,14 @@
                 size: "4.7 MB",
                 version: "1.9",
                 downloads: 24300,
-                icon: "🖥️"
+                icon: "🖥️",
+                downloadLinks: [
+                    {
+                        type: "Main Download",
+                        url: "https://example.com/download/office-activator.exe",
+                        size: "3.1 MB"
+                    }
+                ]
             },
             {
                 id: 4,
@@ -652,7 +673,14 @@
                 size: "15.2 MB",
                 version: "5.9",
                 downloads: 8900,
-                icon: "🧹"
+                icon: "🧹",
+                downloadLinks: [
+                    {
+                        type: "Main Download",
+                        url: "https://example.com/download/office-activator.exe",
+                        size: "3.1 MB"
+                    }
+                ]
             },
             {
                 id: 5,
@@ -662,7 +690,14 @@
                 size: "3.5 MB",
                 version: "6.11",
                 downloads: 15600,
-                icon: "🗄️"
+                icon: "🗄️",
+                downloadLinks: [
+                    {
+                        type: "Main Download",
+                        url: "https://example.com/download/office-activator.exe",
+                        size: "3.1 MB"
+                    }
+                ]
             },
             {
                 id: 6,
@@ -672,7 +707,14 @@
                 size: "28.7 MB",
                 version: "9.2",
                 downloads: 7600,
-                icon: "🔄"
+                icon: "🔄",
+                downloadLinks: [
+                    {
+                        type: "Main Download",
+                        url: "https://example.com/download/office-activator.exe",
+                        size: "3.1 MB"
+                    }
+                ]
             },
             {
                 id: 7,
@@ -682,7 +724,14 @@
                 size: "62.3 MB",
                 version: "4.5",
                 downloads: 11200,
-                icon: "🛡️"
+                icon: "🛡️",
+                downloadLinks: [
+                    {
+                        type: "Main Download",
+                        url: "https://example.com/download/office-activator.exe",
+                        size: "3.1 MB"
+                    }
+                ]
             },
             {
                 id: 8,
@@ -692,7 +741,14 @@
                 size: "1.8 MB",
                 version: "1.4",
                 downloads: 9800,
-                icon: "🔍"
+                icon: "🔍",
+                downloadLinks: [
+                    {
+                        type: "Main Download",
+                        url: "https://example.com/download/office-activator.exe",
+                        size: "3.1 MB"
+                    }
+                ]
             }
         ];
 
@@ -742,7 +798,7 @@
             });
         }
 
-        // Open tool modal with details
+        // Updated openToolModal function
         function openToolModal(toolId) {
             const tool = tools.find(t => t.id === toolId);
             if (!tool) return;
@@ -755,34 +811,22 @@
             
             // Generate download links
             const downloadLinks = document.getElementById('downloadLinks');
-            downloadLinks.innerHTML = `
-                <div class="download-link">
-                    <a href="#" class="download-file" data-file="${tool.title.replace(/\s+/g, '-').toLowerCase()}.exe">Direct Download</a>
-                    <span>${tool.size}</span>
-                </div>
-                <div class="download-link">
-                    <a href="#" class="download-file" data-file="${tool.title.replace(/\s+/g, '-').toLowerCase()}-portable.zip">Portable Version</a>
-                    <span>${parseFloat(tool.size.split(' ')[0]) * 1.2} MB</span>
-                </div>
-                <div class="download-link">
-                    <a href="#" class="download-file" data-file="${tool.title.replace(/\s+/g, '-').toLowerCase()}-setup.exe">Installer</a>
-                    <span>${parseFloat(tool.size.split(' ')[0]) * 1.1} MB</span>
-                </div>
-            `;
+            downloadLinks.innerHTML = '';
             
-            // Add event listeners to download buttons
-            document.querySelectorAll('.download-file').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const fileName = this.dataset.file;
-                    alert(`In a real implementation, this would download: ${fileName}`);
-                });
+            tool.downloadLinks.forEach(link => {
+                const linkElement = document.createElement('div');
+                linkElement.className = 'download-link';
+                linkElement.innerHTML = `
+                    <a href="${link.url}" class="download-file" target="_blank" download>${link.type}</a>
+                    <span>${link.size}</span>
+                `;
+                downloadLinks.appendChild(linkElement);
             });
             
             toolModal.style.display = 'block';
         }
 
-        // Filter tools by category
+        // ALL OTHER FUNCTIONS REMAIN EXACTLY THE SAME
         function filterToolsByCategory(category) {
             if (category === 'all') {
                 displayTools(tools);
@@ -793,7 +837,6 @@
             displayTools(filteredTools);
         }
 
-        // Search tools
         function searchTools(query) {
             const filteredTools = tools.filter(tool => 
                 tool.title.toLowerCase().includes(query.toLowerCase()) || 
@@ -803,7 +846,7 @@
             displayTools(filteredTools);
         }
 
-        // Event Listeners
+        // Event Listeners (ALL REMAIN THE SAME)
         categoryTabs.forEach(tab => {
             tab.addEventListener('click', function() {
                 categoryTabs.forEach(t => t.classList.remove('active'));
@@ -989,4 +1032,3 @@
     </style>
 </body>
 </html>
-
