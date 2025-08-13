@@ -520,18 +520,19 @@
         <div class="container">
             <section id="tools" class="tools-section">
                 <div class="section-title">
-                    <h2>Featured Tools</h2>
+                    <h2>Specialized Tools</h2>
                 </div>
                 <div class="tools-grid" id="tools-container">
                     <!-- Tools will be dynamically loaded here -->
                 </div>
                 <div class="pagination">
-                    <button class="page-btn active">1</button>
-                    <a href="page2.html" class="page-btn">2</a>
-                    <a href="page3.html" class="page-btn">3</a>
-                    <a href="page4.html" class="page-btn">4</a>
-                    <a href="page5.html" class="page-btn">5</a>
-                    <a href="page2.html" class="page-btn">Next →</a>
+                    <a href="page4.html" class="page-btn">← Prev</a>
+                    <button class="page-btn active">5</button>
+                    <a href="page6.html" class="page-btn">6</a>
+                    <a href="page7.html" class="page-btn">7</a>
+                    <a href="page8.html" class="page-btn">8</a>
+                    <a href="page9.html" class="page-btn">9</a>
+                    <a href="page6.html" class="page-btn">Next →</a>
                 </div>
             </section>
 
@@ -541,11 +542,10 @@
                 </div>
                 <div class="category-tabs">
                     <div class="category-tab active" data-category="all">All</div>
-                    <div class="category-tab" data-category="activators">Activators</div>
-                    <div class="category-tab" data-category="utilities">Utilities</div>
-                    <div class="category-tab" data-category="productivity">Productivity</div>
-                    <div class="category-tab" data-category="security">Security</div>
-                    <div class="category-tab" data-category="drivers">Drivers</div>
+                    <div class="category-tab" data-category="recovery">Recovery</div>
+                    <div class="category-tab" data-category="virtualization">Virtualization</div>
+                    <div class="category-tab" data-category="diagnostics">Diagnostics</div>
+                    <div class="category-tab" data-category="automation">Automation</div>
                 </div>
             </section>
         </div>
@@ -561,11 +561,10 @@
                 <div class="footer-column">
                     <h3>Categories</h3>
                     <ul>
-                        <li><a href="#" data-category="activators">Activators</a></li>
-                        <li><a href="#" data-category="utilities">Utilities</a></li>
-                        <li><a href="#" data-category="productivity">Productivity</a></li>
-                        <li><a href="#" data-category="security">Security</a></li>
-                        <li><a href="#" data-category="drivers">Drivers</a></li>
+                        <li><a href="#" data-category="recovery">Recovery</a></li>
+                        <li><a href="#" data-category="virtualization">Virtualization</a></li>
+                        <li><a href="#" data-category="diagnostics">Diagnostics</a></li>
+                        <li><a href="#" data-category="automation">Automation</a></li>
                     </ul>
                 </div>
                 <div class="footer-column" id="contact">
@@ -573,12 +572,11 @@
                     <ul>
                         <li>Email: contact@wintoolshub.com</li>
                         <li>GitHub: er-mailer</li>
-                        <li>Report Issues</li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 WinToolsHub. All rights reserved. | Disclaimer: All tools are for educational purposes only.</p>
+                <p>&copy; 2023 WinToolsHub. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -612,90 +610,92 @@
     </div>
 
     <script>
-        // Tools data for Page 1
+        // Tools data for Page 5
         const tools = [
             {
-                id: 1,
-                title: "IDM Activator",
-                description: "Internet Download Manager activator for full version access.",
-                category: "activators",
-                size: "2.4 MB",
-                version: "6.41",
-                downloads: 12500,
-                icon: "📥"
-            },
-            {
-                id: 2,
-                title: "Office Activator",
-                description: "Microsoft Office activation tool for all versions.",
-                category: "activators",
-                size: "3.1 MB",
-                version: "2.8",
+                id: 33,
+                title: "Recuva",
+                description: "File recovery tool to restore deleted files.",
+                category: "recovery",
+                size: "8.5 MB",
+                version: "1.53",
                 downloads: 18700,
-                icon: "📄"
+                icon: "🗑️"
             },
             {
-                id: 3,
-                title: "Windows Activator",
-                description: "Windows OS activator for permanent activation.",
-                category: "activators",
-                size: "4.7 MB",
-                version: "1.9",
+                id: 34,
+                title: "VirtualBox",
+                description: "Powerful x86 and AMD64/Intel64 virtualization.",
+                category: "virtualization",
+                size: "112 MB",
+                version: "7.0",
                 downloads: 24300,
                 icon: "🖥️"
             },
             {
-                id: 4,
-                title: "CCleaner Pro",
-                description: "System optimization and cleaning tool.",
-                category: "utilities",
-                size: "15.2 MB",
-                version: "5.9",
-                downloads: 8900,
-                icon: "🧹"
+                id: 35,
+                title: "HWMonitor",
+                description: "Hardware monitoring program that reads PC sensors.",
+                category: "diagnostics",
+                size: "1.2 MB",
+                version: "1.47",
+                downloads: 15800,
+                icon: "🌡️"
             },
             {
-                id: 5,
-                title: "WinRAR",
-                description: "File compression and archiving utility.",
-                category: "utilities",
-                size: "3.5 MB",
-                version: "6.11",
-                downloads: 15600,
-                icon: "🗄️"
+                id: 36,
+                title: "AutoHotkey",
+                description: "Scripting language for Windows automation.",
+                category: "automation",
+                size: "3.1 MB",
+                version: "1.1",
+                downloads: 12500,
+                icon: "🤖"
             },
             {
-                id: 6,
-                title: "Driver Booster",
-                description: "Automatic driver updater for Windows.",
-                category: "drivers",
-                size: "28.7 MB",
-                version: "9.2",
-                downloads: 7600,
+                id: 37,
+                title: "TestDisk",
+                description: "Powerful data recovery software.",
+                category: "recovery",
+                size: "5.8 MB",
+                version: "7.1",
+                downloads: 9800,
+                icon: "💾"
+            },
+            {
+                id: 38,
+                title: "VMware Workstation Player",
+                description: "Run multiple OSes as virtual machines.",
+                category: "virtualization",
+                size: "625 MB",
+                version: "17.0",
+                downloads: 11200,
                 icon: "🔄"
             },
             {
-                id: 7,
-                title: "Malwarebytes",
-                description: "Anti-malware and security tool.",
-                category: "security",
-                size: "62.3 MB",
-                version: "4.5",
-                downloads: 11200,
-                icon: "🛡️"
+                id: 39,
+                title: "CrystalDiskInfo",
+                description: "HDD/SSD health monitoring utility.",
+                category: "diagnostics",
+                size: "4.2 MB",
+                version: "8.17",
+                downloads: 18700,
+                icon: "💽"
             },
             {
-                id: 8,
-                title: "Everything Search",
-                description: "Lightning-fast file search utility.",
-                category: "productivity",
-                size: "1.8 MB",
-                version: "1.4",
-                downloads: 9800,
-                icon: "🔍"
+                id: 40,
+                title: "Power Automate",
+                description: "Automate repetitive tasks across applications.",
+                category: "automation",
+                size: "45.8 MB",
+                version: "2.28",
+                downloads: 7600,
+                icon: "⚡"
             }
         ];
 
+        // Rest of the JavaScript is the same as index.html
+        // Just copy all the JavaScript functions from index.html
         // DOM Elements
         const toolsContainer = document.getElementById('tools-container');
         const categoryTabs = document.querySelectorAll('.category-tab');
