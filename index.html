@@ -851,5 +851,142 @@
         // Initialize
         displayTools(tools);
     </script>
-</body>
+
+    <script>
+     // Ad management system for dual-side ads with auto-reload
+     document.addEventListener('DOMContentLoaded', function() {
+         // Initial ad display
+         showDualAds();
+     
+         // Reload ads every 30 seconds (adjust time as needed)
+         setInterval(showDualAds, 30000);
+     });
+
+     function showDualAds() {
+         // Remove existing ads if any
+         removeExistingAds();
+     
+         // Left side ad
+         createAd('left');
+     
+         // Right side ad
+         createAd('right');
+     }
+
+     function removeExistingAds() {
+         const existingAds = document.querySelectorAll('.side-ad-container');
+         existingAds.forEach(ad => ad.remove());
+     }
+
+     function createAd(side) {
+         // Select a random ad from available options
+         const ads = [
+             {
+                 key: '84e9ba1b726a02af33adbd5300986798',
+                 width: 160,
+                 height: 600
+             },
+             {
+                 key: 'b0d06959f52363d2407e68ef8540b01d',
+                 width: 300,
+                 height: 250
+             },
+             {
+                 key: '9482b8870ee3e2a4278270a242214fd7',
+                 width: 160,
+                 height: 300
+             },
+             {
+                 src: '//pl22444853.profitableratecpm.com/ea/2d/5c/ea2d5cb8e28a6875ad444ded2f732c05.js'
+             }
+         ];
+     
+         const randomAd = ads[Math.floor(Math.random() * ads.length)];
+
+         // Create ad container
+         const adContainer = document.createElement('div');
+         adContainer.className = 'side-ad-container';
+         adContainer.style.position = 'fixed';
+         adContainer.style.top = '50%';
+         adContainer.style.transform = 'translateY(-50%)';
+         adContainer.style.zIndex = '1000';
+         adContainer.style.transition = 'all 0.3s ease';
+         adContainer.style.borderRadius = '8px';
+         adContainer.style.overflow = 'hidden';
+         adContainer.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+     
+         // Position based on side
+         if (side === 'left') {
+             adContainer.style.left = '10px';
+         } else {
+             adContainer.style.right = '10px';
+         }
+     
+         // Create close button
+         const closeBtn = document.createElement('button');
+         closeBtn.innerHTML = '&times;';
+         closeBtn.style.position = 'absolute';
+         closeBtn.style.top = '5px';
+         closeBtn.style.right = '5px';
+         closeBtn.style.background = 'rgba(0,0,0,0.5)';
+         closeBtn.style.color = 'white';
+         closeBtn.style.border = 'none';
+         closeBtn.style.borderRadius = '50%';
+         closeBtn.style.width = '25px';
+         closeBtn.style.height = '25px';
+         closeBtn.style.cursor = 'pointer';
+         closeBtn.style.display = 'flex';
+         closeBtn.style.alignItems = 'center';
+         closeBtn.style.justifyContent = 'center';
+         closeBtn.style.zIndex = '1001';
+     
+         // Create ad content
+         const adContent = document.createElement('div');
+     
+         if(randomAd.src) {
+             // JS-based ad
+             const script = document.createElement('script');
+             script.type = 'text/javascript';
+             script.src = randomAd.src;
+             adContent.appendChild(script);
+             adContainer.style.width = '300px';
+             adContainer.style.height = '250px';
+         } else {
+             // Iframe ad
+             const iframe = document.createElement('iframe');
+             iframe.src = `//www.highperformanceformat.com/${randomAd.key}/invoke.html`;
+             iframe.style.border = 'none';
+             iframe.style.width = randomAd.width + 'px';
+             iframe.style.height = randomAd.height + 'px';
+             adContent.appendChild(iframe);
+             adContainer.style.width = randomAd.width + 'px';
+             adContainer.style.height = randomAd.height + 'px';
+         }
+     
+         adContainer.appendChild(adContent);
+         adContainer.appendChild(closeBtn);
+         document.body.appendChild(adContainer);
+     
+         // Close button functionality
+         closeBtn.addEventListener('click', function() {
+             adContainer.style.opacity = '0';
+             setTimeout(() => {
+                 if(adContainer.parentNode) {
+                     document.body.removeChild(adContainer);
+                 }
+             }, 300);
+         });
+     }
+    </script>
+
+    <style>
+     /* Optional responsive styles */
+     @media (max-width: 768px) {
+         .side-ad-container {
+             display: none !important;
+         }
+     }
+    </style>
+    </body>
+
 </html>
