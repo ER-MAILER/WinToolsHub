@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows Tools Collection - E-R</title>
+    <title>WinToolsHub - Windows Tools Download Center</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -12,7 +12,6 @@
             --light-color: #ecf0f1;
             --dark-color: #2c3e50;
             --success-color: #27ae60;
-            --warning-color: #f39c12;
         }
         
         * {
@@ -32,7 +31,10 @@
             background-color: var(--primary-color);
             color: white;
             padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         .container {
@@ -50,6 +52,8 @@
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
+            color: white;
+            text-decoration: none;
         }
         
         .logo span {
@@ -68,6 +72,7 @@
         nav ul li a {
             color: white;
             text-decoration: none;
+            font-weight: 500;
             transition: color 0.3s;
         }
         
@@ -97,34 +102,37 @@
         }
         
         .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
+            font-size: 1.1rem;
+            max-width: 700px;
             margin: 0 auto 2rem;
         }
         
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 50px;
             border: none;
-            cursor: pointer;
+            font-size: 1rem;
+            padding-right: 50px;
         }
         
-        .btn:hover {
-            background-color: #c0392b;
-        }
-        
-        .btn-secondary {
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
             background-color: var(--secondary-color);
-        }
-        
-        .btn-secondary:hover {
-            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
         }
         
         .main-content {
@@ -134,31 +142,57 @@
         .section-title {
             text-align: center;
             margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
             color: var(--dark-color);
+            display: inline-block;
+            background-color: #f5f5f5;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #ddd;
+            z-index: 0;
         }
         
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
         
         .tool-card {
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         
         .tool-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .tool-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
+        .tool-img {
+            height: 160px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-color);
         }
         
         .tool-info {
@@ -167,166 +201,133 @@
         
         .tool-info h3 {
             margin-bottom: 0.5rem;
-            color: var(--primary-color);
+            color: var(--dark-color);
         }
         
         .tool-info p {
-            margin-bottom: 1rem;
             color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
         }
         
         .tool-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1rem;
-        }
-        
-        .tool-meta .version {
-            background-color: var(--light-color);
-            padding: 0.3rem 0.6rem;
-            border-radius: 20px;
             font-size: 0.8rem;
+            color: #777;
         }
         
-        .tool-meta .downloads {
-            color: #666;
-            font-size: 0.9rem;
+        .download-btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
         }
         
-        .about-section {
-            background-color: var(--light-color);
-            padding: 3rem 0;
-            margin: 3rem 0;
+        .download-btn:hover {
+            background-color: #2980b9;
         }
         
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
+        .categories {
+            margin-bottom: 3rem;
         }
         
-        .about-content h2 {
-            margin-bottom: 1rem;
-            color: var(--dark-color);
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
         }
         
-        .about-content p {
-            margin-bottom: 1.5rem;
-        }
-        
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
+        .category-tab {
+            padding: 0.5rem 1rem;
             background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
-        .form-group textarea {
-            min-height: 150px;
+        .category-tab:hover, .category-tab.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+        
+        .page-btn {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .page-btn:hover, .page-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
         }
         
         footer {
             background-color: var(--dark-color);
             color: white;
-            padding: 2rem 0;
-            text-align: center;
+            padding: 3rem 0 1.5rem;
         }
         
         .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
         
-        .social-links {
-            margin: 1rem 0;
-        }
-        
-        .social-links a {
-            color: white;
-            margin: 0 0.5rem;
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
             color: var(--secondary-color);
         }
         
-        .copyright {
-            margin-top: 1rem;
-            font-size: 0.9rem;
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-column ul li a {
             color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
         }
         
-        /* Mobile styles */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                margin-top: 1rem;
-            }
-            
-            nav ul li {
-                margin: 0.5rem 0;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-            }
-            
-            .nav-menu {
-                display: none;
-            }
-            
-            .nav-menu.active {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
+        .footer-column ul li a:hover {
+            color: white;
         }
         
-        /* Tool details modal */
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -334,45 +335,40 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             overflow-y: auto;
         }
         
         .modal-content {
             background-color: white;
-            margin: 2rem auto;
-            max-width: 800px;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 600px;
             border-radius: 8px;
             overflow: hidden;
-            animation: modalFadeIn 0.3s;
+            animation: modalOpen 0.4s;
         }
         
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes modalOpen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
         }
         
         .modal-header {
+            padding: 1rem 1.5rem;
             background-color: var(--primary-color);
             color: white;
-            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .modal-header h2 {
-            font-size: 1.5rem;
+        .modal-header h3 {
+            font-size: 1.3rem;
         }
         
-        .close-btn {
+        .close-modal {
             background: none;
             border: none;
             color: white;
@@ -384,380 +380,489 @@
             padding: 1.5rem;
         }
         
-        .modal-body img {
-            max-width: 100%;
-            height: auto;
+        .tool-details-img {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
             margin-bottom: 1rem;
-            border-radius: 5px;
-        }
-        
-        .modal-footer {
-            padding: 1rem;
-            text-align: right;
-            border-top: 1px solid #eee;
-        }
-        
-        /* Download instructions */
-        .download-instructions {
-            background-color: var(--light-color);
-            padding: 1.5rem;
-            border-radius: 5px;
-            margin: 1.5rem 0;
-        }
-        
-        .download-instructions h3 {
-            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
             color: var(--primary-color);
         }
         
-        .download-instructions ol {
-            margin-left: 1.5rem;
+        .tool-details-info {
+            margin-bottom: 1.5rem;
         }
         
-        .download-instructions li {
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Alert messages */
-        .alert {
-            padding: 1rem;
-            border-radius: 5px;
+        .tool-details-info p {
             margin-bottom: 1rem;
         }
         
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        .download-options {
+            margin-top: 1.5rem;
         }
         
-        .alert-warning {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
+        .download-options h4 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
         }
         
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        .download-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .download-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .download-link a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .download-link span {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav {
+                margin-top: 1rem;
+                width: 100%;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">Windows<span>Tools</span></div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <nav class="nav-menu" id="navMenu">
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#tools">Tools</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
+        <div class="container header-content">
+            <a href="#" class="logo">Win<span>Tools</span>Hub</a>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
-    
-    <section class="hero" id="home">
+
+    <section class="hero">
         <div class="container">
-            <h1>Premium Windows Tools Collection</h1>
-            <p>Download free utilities to enhance your Windows experience. Our tools include IDM activators, system optimizers, and other helpful utilities.</p>
-            <a href="#tools" class="btn">Browse Tools</a>
-            <a href="#about" class="btn btn-secondary">Learn More</a>
-        </div>
-    </section>
-    
-    <section class="main-content">
-        <div class="container">
-            <h2 class="section-title" id="tools">Featured Tools</h2>
-            
-            <div class="tools-grid">
-                <!-- IDM Activator -->
-                <div class="tool-card">
-                    <img src="https://www.internetdownloadmanager.com/images/logo-idm1.png" alt="IDM Activator">
-                    <div class="tool-info">
-                        <h3>IDM Activation Script</h3>
-                        <p>Complete solution to activate Internet Download Manager with registry lock method.</p>
-                        <div class="tool-meta">
-                            <span class="version">v6.41</span>
-                            <span class="downloads">10,000+ downloads</span>
-                        </div>
-                        <button class="btn" onclick="openModal('idm-modal')">Details & Download</button>
-                    </div>
-                </div>
-                
-                <!-- Windows Optimizer -->
-                <div class="tool-card">
-                    <img src="https://cdn-icons-png.flaticon.com/512/888/888882.png" alt="Windows Optimizer">
-                    <div class="tool-info">
-                        <h3>Windows Optimizer</h3>
-                        <p>Clean and optimize your Windows system for better performance.</p>
-                        <div class="tool-meta">
-                            <span class="version">v2.3</span>
-                            <span class="downloads">5,000+ downloads</span>
-                        </div>
-                        <button class="btn" onclick="openModal('winopt-modal')">Details & Download</button>
-                    </div>
-                </div>
-                
-                <!-- Office Activator -->
-                <div class="tool-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Microsoft_Office_logo_%282019%E2%80%93present%29.svg/1200px-Microsoft_Office_logo_%282019%E2%80%93present%29.svg.png" alt="Office Activator">
-                    <div class="tool-info">
-                        <h3>Office Activator</h3>
-                        <p>Activate Microsoft Office products with this simple tool.</p>
-                        <div class="tool-meta">
-                            <span class="version">v1.8</span>
-                            <span class="downloads">8,000+ downloads</span>
-                        </div>
-                        <button class="btn" onclick="openModal('office-modal')">Details & Download</button>
-                    </div>
-                </div>
+            <h1>Your Ultimate Windows Tools Collection</h1>
+            <p>Download essential Windows utilities, activators, and productivity tools all in one place. Carefully curated and tested for your convenience.</p>
+            <div class="search-box">
+                <input type="text" placeholder="Search for tools...">
+                <button>🔍</button>
             </div>
         </div>
     </section>
-    
-    <section class="about-section" id="about">
+
+    <main class="main-content">
         <div class="container">
-            <div class="about-content">
-                <h2>About Windows Tools</h2>
-                <p>We provide free, high-quality utilities for Windows users. Our tools are carefully developed and tested to ensure they work as intended without any malware or unwanted software.</p>
-                <p>All our tools are open for inspection and don't contain any hidden surprises. We believe in transparency and user trust.</p>
-                <a href="#contact" class="btn">Contact Us</a>
-            </div>
+            <section id="tools" class="tools-section">
+                <div class="section-title">
+                    <h2>Featured Tools</h2>
+                </div>
+                <div class="tools-grid" id="tools-container">
+                    <!-- Tools will be dynamically loaded here -->
+                </div>
+                <div class="pagination">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">Next →</button>
+                </div>
+            </section>
+
+            <section id="categories" class="categories">
+                <div class="section-title">
+                    <h2>Categories</h2>
+                </div>
+                <div class="category-tabs">
+                    <div class="category-tab active" data-category="all">All</div>
+                    <div class="category-tab" data-category="activators">Activators</div>
+                    <div class="category-tab" data-category="utilities">Utilities</div>
+                    <div class="category-tab" data-category="productivity">Productivity</div>
+                    <div class="category-tab" data-category="security">Security</div>
+                    <div class="category-tab" data-category="drivers">Drivers</div>
+                </div>
+            </section>
         </div>
-    </section>
-    
-    <section class="main-content">
-        <div class="container">
-            <h2 class="section-title" id="contact">Contact</h2>
-            
-            <div class="contact-form">
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-    
+    </main>
+
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="logo">Windows<span>Tools</span></div>
-                <div class="social-links">
-                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                <div class="footer-column">
+                    <h3>WinToolsHub</h3>
+                    <p>Your one-stop destination for all Windows-related tools and utilities. Carefully curated collection for professionals and enthusiasts.</p>
                 </div>
-                <p class="copyright">© 2023 Windows Tools. All rights reserved.</p>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#tools">Tools</a></li>
+                        <li><a href="#categories">Categories</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#" data-category="activators">Activators</a></li>
+                        <li><a href="#" data-category="utilities">Utilities</a></li>
+                        <li><a href="#" data-category="productivity">Productivity</a></li>
+                        <li><a href="#" data-category="security">Security</a></li>
+                        <li><a href="#" data-category="drivers">Drivers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column" id="contact">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Email: contact@wintoolshub.com</li>
+                        <li>GitHub: er-mailer</li>
+                        <li>Report Issues</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 WinToolsHub. All rights reserved. | Disclaimer: All tools are for educational purposes only.</p>
             </div>
         </div>
     </footer>
-    
-    <!-- IDM Activator Modal -->
-    <div class="modal" id="idm-modal">
+
+    <!-- Tool Details Modal -->
+    <div class="modal" id="toolModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>IDM Activation Script</h2>
-                <button class="close-btn" onclick="closeModal()">×</button>
+                <h3 id="modalToolTitle">Tool Name</h3>
+                <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <img src="https://www.internetdownloadmanager.com/images/logo-idm1.png" alt="IDM Logo">
-                
-                <div class="alert alert-warning">
-                    <strong>Important:</strong> Disable your antivirus temporarily before running the activator as it might flag the file as false positive.
+                <div class="tool-details-img" id="modalToolImg">
+                    <!-- Tool image or icon will go here -->
                 </div>
-                
-                <h3>Features:</h3>
-                <ul>
-                    <li>Activate Internet Download Manager permanently</li>
-                    <li>Reset trial period if needed</li>
-                    <li>Toggle Windows Firewall easily</li>
-                    <li>Supports all Windows versions from 7 to 11</li>
-                    <li>Lightweight and fast</li>
-                </ul>
-                
-                <div class="download-instructions">
-                    <h3>How to Use:</h3>
-                    <ol>
-                        <li>Download the script file below</li>
-                        <li>Right-click on the file and select "Run as administrator"</li>
-                        <li>Follow the on-screen instructions</li>
-                        <li>Select option 1 to activate IDM</li>
-                        <li>Restart IDM to see the changes</li>
-                    </ol>
+                <div class="tool-details-info">
+                    <p id="modalToolDesc">Tool description will appear here with full details about the functionality and features of the tool.</p>
+                    <div class="tool-meta">
+                        <span id="modalToolSize">Size: 5.2 MB</span>
+                        <span id="modalToolVersion">Version: 1.0.0</span>
+                    </div>
                 </div>
-                
-                <div class="alert alert-success">
-                    <strong>Note:</strong> This script works with all IDM versions and future updates.
+                <div class="download-options">
+                    <h4>Download Options</h4>
+                    <div class="download-links" id="downloadLinks">
+                        <!-- Download links will be added here dynamically -->
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="downloadFile('IDM_Activator_v6.41.cmd')">Download Now</button>
-                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
             </div>
         </div>
     </div>
-    
-    <!-- Windows Optimizer Modal -->
-    <div class="modal" id="winopt-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Windows Optimizer</h2>
-                <button class="close-btn" onclick="closeModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <img src="https://cdn-icons-png.flaticon.com/512/888/888882.png" alt="Windows Logo">
-                
-                <h3>Features:</h3>
-                <ul>
-                    <li>Clean temporary files and system junk</li>
-                    <li>Optimize Windows services for better performance</li>
-                    <li>Disable unnecessary startup programs</li>
-                    <li>Fix common Windows issues</li>
-                    <li>User-friendly interface</li>
-                </ul>
-                
-                <div class="download-instructions">
-                    <h3>How to Use:</h3>
-                    <ol>
-                        <li>Download the optimizer tool</li>
-                        <li>Run it as administrator</li>
-                        <li>Select the optimizations you want to apply</li>
-                        <li>Click "Apply" and restart your computer</li>
-                    </ol>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="downloadFile('Windows_Optimizer_v2.3.exe')">Download Now</button>
-                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Office Activator Modal -->
-    <div class="modal" id="office-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Office Activator</h2>
-                <button class="close-btn" onclick="closeModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Microsoft_Office_logo_%282019%E2%80%93present%29.svg/1200px-Microsoft_Office_logo_%282019%E2%80%93present%29.svg.png" alt="Office Logo">
-                
-                <div class="alert alert-warning">
-                    <strong>Important:</strong> This tool is for educational purposes only. Please support Microsoft by purchasing genuine licenses.
-                </div>
-                
-                <h3>Features:</h3>
-                <ul>
-                    <li>Activate Microsoft Office 2010-2021</li>
-                    <li>Supports all Office products (Word, Excel, etc.)</li>
-                    <li>Simple one-click activation</li>
-                    <li>No installation required</li>
-                </ul>
-                
-                <div class="download-instructions">
-                    <h3>How to Use:</h3>
-                    <ol>
-                        <li>Download the activator</li>
-                        <li>Disable your antivirus temporarily</li>
-                        <li>Run the tool as administrator</li>
-                        <li>Click "Activate" and wait for completion</li>
-                        <li>Restart your Office applications</li>
-                    </ol>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="downloadFile('Office_Activator_v1.8.exe')">Download Now</button>
-                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    
+
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('navMenu').classList.toggle('active');
-        });
-        
-        // Modal functions
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeModal() {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                modal.style.display = 'none';
+        // Sample tools data - you would replace this with your actual tools data
+        const tools = [
+            {
+                id: 1,
+                title: "IDM Activator",
+                description: "Internet Download Manager activator for full version access.",
+                category: "activators",
+                size: "2.4 MB",
+                version: "6.41",
+                downloads: 12500,
+                icon: "📥"
+            },
+            {
+                id: 2,
+                title: "Office Activator",
+                description: "Microsoft Office activation tool for all versions.",
+                category: "activators",
+                size: "3.1 MB",
+                version: "2.8",
+                downloads: 18700,
+                icon: "📄"
+            },
+            {
+                id: 3,
+                title: "Windows Activator",
+                description: "Windows OS activator for permanent activation.",
+                category: "activators",
+                size: "4.7 MB",
+                version: "1.9",
+                downloads: 24300,
+                icon: "🖥️"
+            },
+            {
+                id: 4,
+                title: "CCleaner Pro",
+                description: "System optimization and cleaning tool.",
+                category: "utilities",
+                size: "15.2 MB",
+                version: "5.9",
+                downloads: 8900,
+                icon: "🧹"
+            },
+            {
+                id: 5,
+                title: "WinRAR",
+                description: "File compression and archiving utility.",
+                category: "utilities",
+                size: "3.5 MB",
+                version: "6.11",
+                downloads: 15600,
+                icon: "🗄️"
+            },
+            {
+                id: 6,
+                title: "Driver Booster",
+                description: "Automatic driver updater for Windows.",
+                category: "drivers",
+                size: "28.7 MB",
+                version: "9.2",
+                downloads: 7600,
+                icon: "🔄"
+            },
+            {
+                id: 7,
+                title: "Malwarebytes",
+                description: "Anti-malware and security tool.",
+                category: "security",
+                size: "62.3 MB",
+                version: "4.5",
+                downloads: 11200,
+                icon: "🛡️"
+            },
+            {
+                id: 8,
+                title: "Everything Search",
+                description: "Lightning-fast file search utility.",
+                category: "productivity",
+                size: "1.8 MB",
+                version: "1.4",
+                downloads: 9800,
+                icon: "🔍"
+            }
+        ];
+
+        // DOM Elements
+        const toolsContainer = document.getElementById('tools-container');
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const searchInput = document.querySelector('.search-box input');
+        const searchButton = document.querySelector('.search-box button');
+        const toolModal = document.getElementById('toolModal');
+        const closeModal = document.querySelector('.close-modal');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+
+        // Display tools in the grid
+        function displayTools(toolsToDisplay) {
+            toolsContainer.innerHTML = '';
+            
+            toolsToDisplay.forEach(tool => {
+                const toolCard = document.createElement('div');
+                toolCard.className = 'tool-card';
+                toolCard.dataset.id = tool.id;
+                toolCard.dataset.category = tool.category;
+                
+                toolCard.innerHTML = `
+                    <div class="tool-img">${tool.icon}</div>
+                    <div class="tool-info">
+                        <h3>${tool.title}</h3>
+                        <p>${tool.description}</p>
+                        <div class="tool-meta">
+                            <span>${tool.size}</span>
+                            <span>${tool.downloads.toLocaleString()} downloads</span>
+                        </div>
+                        <a href="#" class="download-btn view-details" data-id="${tool.id}">View Details</a>
+                    </div>
+                `;
+                
+                toolsContainer.appendChild(toolCard);
             });
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', function(event) {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        });
-        
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
-        
-        // Download function (simulated)
-        function downloadFile(filename) {
-            alert('Download started: ' + filename);
-            // In a real implementation, this would link to your actual file
-            // window.location.href = 'downloads/' + filename;
-            closeModal();
-        }
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+            
+            // Add event listeners to view details buttons
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const toolId = parseInt(this.dataset.id);
+                    openToolModal(toolId);
                 });
             });
+        }
+
+        // Open tool modal with details
+        function openToolModal(toolId) {
+            const tool = tools.find(t => t.id === toolId);
+            if (!tool) return;
+            
+            document.getElementById('modalToolTitle').textContent = tool.title;
+            document.getElementById('modalToolImg').innerHTML = tool.icon;
+            document.getElementById('modalToolDesc').textContent = tool.description;
+            document.getElementById('modalToolSize').textContent = `Size: ${tool.size}`;
+            document.getElementById('modalToolVersion').textContent = `Version: ${tool.version}`;
+            
+            // Generate download links (in a real app, these would be your actual download URLs)
+            const downloadLinks = document.getElementById('downloadLinks');
+            downloadLinks.innerHTML = `
+                <div class="download-link">
+                    <a href="#" class="download-file" data-file="${tool.title.replace(/\s+/g, '-').toLowerCase()}.exe">Direct Download</a>
+                    <span>${tool.size}</span>
+                </div>
+                <div class="download-link">
+                    <a href="#" class="download-file" data-file="${tool.title.replace(/\s+/g, '-').toLowerCase()}-portable.zip">Portable Version</a>
+                    <span>${parseFloat(tool.size.split(' ')[0]) * 1.2} MB</span>
+                </div>
+                <div class="download-link">
+                    <a href="#" class="download-file" data-file="${tool.title.replace(/\s+/g, '-').toLowerCase()}-setup.exe">Installer</a>
+                    <span>${parseFloat(tool.size.split(' ')[0]) * 1.1} MB</span>
+                </div>
+            `;
+            
+            // Add event listeners to download buttons
+            document.querySelectorAll('.download-file').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const fileName = this.dataset.file;
+                    alert(`In a real implementation, this would download: ${fileName}`);
+                    // In your actual implementation, you would initiate the file download here
+                });
+            });
+            
+            toolModal.style.display = 'block';
+        }
+
+        // Filter tools by category
+        function filterToolsByCategory(category) {
+            if (category === 'all') {
+                displayTools(tools);
+                return;
+            }
+            
+            const filteredTools = tools.filter(tool => tool.category === category);
+            displayTools(filteredTools);
+        }
+
+        // Search tools
+        function searchTools(query) {
+            const filteredTools = tools.filter(tool => 
+                tool.title.toLowerCase().includes(query.toLowerCase()) || 
+                tool.description.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            displayTools(filteredTools);
+        }
+
+        // Event Listeners
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                filterToolsByCategory(this.dataset.category);
+            });
         });
+
+        searchButton.addEventListener('click', () => {
+            searchTools(searchInput.value);
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchTools(searchInput.value);
+            }
+        });
+
+        closeModal.addEventListener('click', () => {
+            toolModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === toolModal) {
+                toolModal.style.display = 'none';
+            }
+        });
+
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Footer category links
+        document.querySelectorAll('.footer-column a[data-category]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.dataset.category;
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                document.querySelector(`.category-tab[data-category="${category}"]`).classList.add('active');
+                filterToolsByCategory(category);
+                window.scrollTo({ top: document.getElementById('categories').offsetTop, behavior: 'smooth' });
+            });
+        });
+
+        // Initialize
+        displayTools(tools);
     </script>
 </body>
 </html>
